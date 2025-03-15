@@ -2,3 +2,14 @@ trailingComma: es5
 tabWidth: 2
 semi: true
 singleQuote: true
+plugins:
+  - '@trivago/prettier-plugin-sort-imports'
+importOrderParserPlugins:
+  - 'typescript'
+  - 'decorators-legacy'
+importOrder:
+  - <THIRD_PARTY_MODULES>
+  - '^\./(.*)$'
+  - '^\.\./(.*)$'
+importOrderSeparation: true
+importOrderSortSpecifiers: true
