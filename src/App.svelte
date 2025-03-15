@@ -4,7 +4,7 @@
   import Counter from './lib/Counter.svelte'
 </script>
 
-<main>
+<main class="bg-gray-500">
   <div>
     <a href="https://vite.dev" target="_blank" rel="noreferrer">
       <img src={viteLogo} class="logo" alt="Vite Logo" />
