@@ -42,6 +42,22 @@ If you have state that's important to retain within a component, consider creati
 ```ts
 // store.ts
 // An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+import { writable } from 'svelte/store';
+
+export default writable(0);
 ```
+
+## Roadmap
+
+- [ ] PWA
+- [ ] LocalStorage
+- [ ] Google Analytics
+
+## Links
+
+- https://www.mediawiki.org/wiki/API:Random
+- https://www.mediawiki.org/wiki/API:Images
+- https://www.mediawiki.org/wiki/API:Main_page
+- https://en.wikipedia.org/api/rest_v1/#/Page%20content
+- https://svelte.dev/docs/svelte/faq#Is-there-a-router
+- https://svelte.dev/docs/svelte/$effect
