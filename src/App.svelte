@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  import Header from './lib/Header.svelte';
   import type { RandomPageResponse } from './lib/Wikipedia/types';
 
   let stored: RandomPageResponse[] = [
@@ -118,6 +119,8 @@
     return () => container.removeEventListener('scroll', handler);
   });
 </script>
+
+<Header />
 
 <main class="h-dvh h-screen snap-y snap-mandatory overflow-y-scroll">
   {#each stored as page}

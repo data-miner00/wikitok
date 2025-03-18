@@ -1,6 +1,11 @@
 @import 'tailwindcss';
 @import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 
+html,
+body {
+  font-family: 'Times New Roman', Times, serif;
+}
+
 main {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
