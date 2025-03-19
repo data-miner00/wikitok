@@ -52,6 +52,12 @@ export default writable(0);
 - [ ] PWA
 - [ ] LocalStorage
 - [ ] Google Analytics
+- [ ] History List
+- [ ] Favorite List
+- [ ] Track clicks
+- [ ] Simple usage analytics
+- [ ] Mobile responsive
+- [ ] Social sharing
 
 ## Links
 

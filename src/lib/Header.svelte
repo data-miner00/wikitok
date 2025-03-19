@@ -1,5 +1,5 @@
 <header
-  class="fixed top-0 left-0 flex w-screen items-center justify-between p-4 text-white"
+  class="fixed top-0 left-0 z-10 flex w-screen items-center justify-between p-4 text-white"
 >
   <div>
     <a
@@ -8,5 +8,17 @@
       title="Home">Wikitok</a
     >
   </div>
-  <div>Other links</div>
+  <nav>
+    <ul class="flex items-center gap-3 text-xl">
+      <li>
+        <i class="bi bi-heart"></i>
+      </li>
+      <li>
+        <i class="bi bi-clock"></i>
+      </li>
+      <li>
+        <i class="bi bi-translate"></i>
+      </li>
+    </ul>
+  </nav>
 </header>

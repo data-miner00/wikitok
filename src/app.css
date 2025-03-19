@@ -1,8 +1,10 @@
 @import 'tailwindcss';
 @import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 
-html,
-body {
+h1,
+h2,
+h3,
+[title='Home'] {
   font-family: 'Times New Roman', Times, serif;
 }
 
