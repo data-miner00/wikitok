@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
 
   import Header from './lib/Header.svelte';
+  import WikiItem from './lib/WikiItem.svelte';
   import type { RandomPageResponse } from './lib/Wikipedia/types';
 
   let stored: RandomPageResponse[] = [
@@ -124,19 +125,11 @@
 
 <main class="h-dvh h-screen snap-y snap-mandatory overflow-y-scroll">
   {#each stored as page}
-    <article
-      class="relative h-screen w-screen snap-start bg-slate-400 bg-cover bg-center bg-no-repeat bg-blend-darken"
-      style:background-image={`url('${page.originalimage.source}')`}
-    >
-      <a
-        href={page.content_urls.desktop.page}
-        target="_blank"
-        rel="noopener"
-        class="absolute bottom-0 left-0 block w-full bg-black/50 p-4 text-white"
-      >
-        <h2 class="mb-2 text-3xl">{page.title}</h2>
-        <p>{page.extract}</p>
-      </a>
-    </article>
+    <WikiItem
+      backgroundUrl={page.originalimage.source}
+      wikiUrl={page.content_urls.desktop.page}
+      title={page.title}
+      excerpt={page.extract}
+    />
   {/each}
 </main>
