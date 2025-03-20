@@ -4,6 +4,12 @@
   import Header from './lib/Header.svelte';
   import WikiItem from './lib/WikiItem.svelte';
   import type { RandomPageResponse } from './lib/Wikipedia/types';
+  import {
+    batchLoadingCount,
+    debugMode,
+    throttleTimeInMilliseconds,
+    triggerFetchPercentageThreshold,
+  } from './lib/constants';
   import { placeholderResponse } from './lib/data';
 
   let stored: RandomPageResponse[] = [placeholderResponse];
@@ -14,10 +20,9 @@
   onMount(() => {
     async function execute() {
       lastExecuted = new Date();
-      const initialLoadingCount = 5;
       const tasks: Promise<Response>[] = [];
 
-      for (let i = 0; i < initialLoadingCount; i++) {
+      for (let i = 0; i < batchLoadingCount; i++) {
         tasks.push(
           fetch('https://en.wikipedia.org/api/rest_v1/page/random/summary')
         );
@@ -30,7 +35,7 @@
       const responses = await Promise.all(pages);
 
       stored = [...stored, ...responses];
-      console.log(stored);
+      if (debugMode) console.log(stored);
     }
 
     execute();
@@ -43,15 +48,17 @@
       const scrollHeight = target.scrollTop;
 
       if (
-        scrollHeight / totalHeight > 0.8 &&
-        Date.now() - lastExecuted.getTime() > 2000
+        scrollHeight / totalHeight > triggerFetchPercentageThreshold &&
+        Date.now() - lastExecuted.getTime() > throttleTimeInMilliseconds
       ) {
         execute();
-        console.log('hello debounce');
+        if (debugMode) console.log('hello debounce');
       }
 
-      console.log(totalHeight);
-      console.log(scrollHeight);
+      if (debugMode) {
+        console.log(totalHeight);
+        console.log(scrollHeight);
+      }
     }
 
     container.addEventListener('scroll', handler);
