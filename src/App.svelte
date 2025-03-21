@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
+  import type { Unsubscriber } from 'svelte/store';
 
   import Header from './lib/Header.svelte';
   import WikiItem from './lib/WikiItem.svelte';
@@ -24,6 +25,7 @@
   let lastExecuted: Date;
 
   let hash = $state(window.location.hash);
+  let storeSubscriptions: Unsubscriber[] = [];
 
   function addWikiToHistoryLocalStorage(item: WikiListItem) {
     historyList.update((value) => {
@@ -91,15 +93,20 @@
     });
 
     if (debugMode) {
-      historyList.subscribe((value) => {
-        console.log('from store for history');
-        console.log(value);
-      });
+      // unsub these
+      storeSubscriptions.push(
+        historyList.subscribe((value) => {
+          console.log('from store for history');
+          console.log(value);
+        })
+      );
 
-      favoriteList.subscribe((value) => {
-        console.log('from store for favorites');
-        console.log(value);
-      });
+      storeSubscriptions.push(
+        favoriteList.subscribe((value) => {
+          console.log('from store for favorites');
+          console.log(value);
+        })
+      );
     }
 
     function handler(event: Event) {
@@ -122,8 +129,15 @@
 
     container.addEventListener('scroll', handler);
 
-    return () => container.removeEventListener('scroll', handler);
+    return () => {
+      container.removeEventListener('scroll', handler);
+
+      storeSubscriptions.forEach((x) => x());
+      storeSubscriptions = [];
+    };
   });
+
+  onDestroy(() => {});
 </script>
 
 <Header />
