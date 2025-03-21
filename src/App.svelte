@@ -7,15 +7,30 @@
   import {
     batchLoadingCount,
     debugMode,
+    localStorageHistoryKey,
+    localStoragePrefix,
     throttleTimeInMilliseconds,
     triggerFetchPercentageThreshold,
   } from './lib/constants';
   import { placeholderResponse } from './lib/data';
+  import { historyList } from './lib/stores';
+  import type { WikiListItem } from './lib/types';
 
   let stored: RandomPageResponse[] = [placeholderResponse];
 
   let container: HTMLElement;
   let lastExecuted: Date;
+
+  function addWikiToHistoryLocalStorage(item: WikiListItem) {
+    historyList.update((value) => {
+      const updatedList = [...value, item];
+      localStorage.setItem(
+        localStoragePrefix + localStorageHistoryKey,
+        JSON.stringify(updatedList)
+      );
+      return updatedList;
+    });
+  }
 
   onMount(() => {
     async function execute() {
@@ -41,6 +56,13 @@
     execute();
 
     container = document.getElementsByTagName('main')?.[0];
+
+    if (debugMode) {
+      historyList.subscribe((value) => {
+        console.log('from store');
+        console.log(value);
+      });
+    }
 
     function handler(event: Event) {
       const target = event.target as HTMLElement;
@@ -76,6 +98,7 @@
       wikiUrl={page.content_urls.desktop.page}
       title={page.title}
       excerpt={page.extract}
+      onVisit={addWikiToHistoryLocalStorage}
     />
   {/each}
 </main>

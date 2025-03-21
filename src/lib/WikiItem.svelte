@@ -1,5 +1,16 @@
 <script lang="ts">
-  let { backgroundUrl, wikiUrl, title, excerpt } = $props();
+  import type { WikiListItem } from './types';
+
+  let { backgroundUrl, wikiUrl, title, excerpt, onVisit } = $props();
+
+  function handleClick(event: MouseEvent) {
+    onVisit({
+      title,
+      extract: excerpt,
+      url: wikiUrl,
+      thumbnail: backgroundUrl,
+    } as WikiListItem);
+  }
 </script>
 
 <article
@@ -11,6 +22,7 @@
     target="_blank"
     rel="noopener"
     class="absolute bottom-0 left-0 block w-full bg-black/50 p-4 text-white"
+    onclick={handleClick}
   >
     <h2 class="mb-2 text-3xl">{title}</h2>
     <p>{excerpt}</p>
