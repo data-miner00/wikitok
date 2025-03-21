@@ -17,7 +17,7 @@ export const historyList = writable<WikiList>(
     : []
 );
 export const favoriteList = writable<WikiList>(
-  localStorage.getItem(localStoragePrefix + localStorageHistoryKey)
+  localStorage.getItem(localStoragePrefix + localStorageFavoriteKey)
     ? JSON.parse(
         localStorage.getItem(
           localStoragePrefix + localStorageFavoriteKey

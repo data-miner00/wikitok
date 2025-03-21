@@ -7,13 +7,14 @@
   import {
     batchLoadingCount,
     debugMode,
+    localStorageFavoriteKey,
     localStorageHistoryKey,
     localStoragePrefix,
     throttleTimeInMilliseconds,
     triggerFetchPercentageThreshold,
   } from './lib/constants';
   import { placeholderResponse } from './lib/data';
-  import { historyList } from './lib/stores';
+  import { favoriteList, historyList } from './lib/stores';
   import type { WikiListItem } from './lib/types';
 
   let stored: RandomPageResponse[] = [placeholderResponse];
@@ -26,6 +27,32 @@
       const updatedList = [...value, item];
       localStorage.setItem(
         localStoragePrefix + localStorageHistoryKey,
+        JSON.stringify(updatedList)
+      );
+      return updatedList;
+    });
+  }
+
+  function addWikiToFavoritesLocalStorage(
+    item: WikiListItem,
+    isFavorite: boolean
+  ) {
+    if (!isFavorite) {
+      favoriteList.update((value) => {
+        const updatedList = value.filter((x) => x.title !== item.title);
+        localStorage.setItem(
+          localStoragePrefix + localStorageFavoriteKey,
+          JSON.stringify(updatedList)
+        );
+        return updatedList;
+      });
+      return;
+    }
+
+    favoriteList.update((value) => {
+      const updatedList = [...value, item];
+      localStorage.setItem(
+        localStoragePrefix + localStorageFavoriteKey,
         JSON.stringify(updatedList)
       );
       return updatedList;
@@ -50,7 +77,6 @@
       const responses = await Promise.all(pages);
 
       stored = [...stored, ...responses];
-      if (debugMode) console.log(stored);
     }
 
     execute();
@@ -59,7 +85,12 @@
 
     if (debugMode) {
       historyList.subscribe((value) => {
-        console.log('from store');
+        console.log('from store for history');
+        console.log(value);
+      });
+
+      favoriteList.subscribe((value) => {
+        console.log('from store for favorites');
         console.log(value);
       });
     }
@@ -74,7 +105,6 @@
         Date.now() - lastExecuted.getTime() > throttleTimeInMilliseconds
       ) {
         execute();
-        if (debugMode) console.log('hello debounce');
       }
 
       if (debugMode) {
@@ -99,6 +129,7 @@
       title={page.title}
       excerpt={page.extract}
       onVisit={addWikiToHistoryLocalStorage}
+      onFavorite={addWikiToFavoritesLocalStorage}
     />
   {/each}
 </main>
