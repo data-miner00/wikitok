@@ -11,7 +11,12 @@
   <nav>
     <ul class="flex items-center gap-3 text-xl">
       <li>
-        <i class="bi bi-heart"></i>
+        <a href="#"> Home </a>
+      </li>
+      <li>
+        <a href="#favorites" title="Favorites">
+          <i class="bi bi-heart"></i>
+        </a>
       </li>
       <li>
         <i class="bi bi-clock"></i>

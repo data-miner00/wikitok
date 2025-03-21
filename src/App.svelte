@@ -16,11 +16,14 @@
   import { placeholderResponse } from './lib/data';
   import { favoriteList, historyList } from './lib/stores';
   import type { WikiListItem } from './lib/types';
+  import Favorite from './lib/views/Favorite.svelte';
 
-  let stored: RandomPageResponse[] = [placeholderResponse];
+  let stored: RandomPageResponse[] = $state([placeholderResponse]);
 
   let container: HTMLElement;
   let lastExecuted: Date;
+
+  let hash = $state(window.location.hash);
 
   function addWikiToHistoryLocalStorage(item: WikiListItem) {
     historyList.update((value) => {
@@ -83,6 +86,10 @@
 
     container = document.getElementsByTagName('main')?.[0];
 
+    window.addEventListener('hashchange', () => {
+      hash = window.location.hash;
+    });
+
     if (debugMode) {
       historyList.subscribe((value) => {
         console.log('from store for history');
@@ -121,15 +128,21 @@
 
 <Header />
 
-<main class="h-dvh h-screen snap-y snap-mandatory overflow-y-scroll">
-  {#each stored as page}
-    <WikiItem
-      backgroundUrl={page.originalimage.source}
-      wikiUrl={page.content_urls.desktop.page}
-      title={page.title}
-      excerpt={page.extract}
-      onVisit={addWikiToHistoryLocalStorage}
-      onFavorite={addWikiToFavoritesLocalStorage}
-    />
-  {/each}
-</main>
+{#if hash == ''}
+  <main class="h-dvh h-screen snap-y snap-mandatory overflow-y-scroll">
+    {#each stored as page}
+      <WikiItem
+        backgroundUrl={page.originalimage.source}
+        wikiUrl={page.content_urls.desktop.page}
+        title={page.title}
+        excerpt={page.extract}
+        onVisit={addWikiToHistoryLocalStorage}
+        onFavorite={addWikiToFavoritesLocalStorage}
+      />
+    {/each}
+  </main>
+{/if}
+
+{#if hash == '#favorites'}
+  <Favorite />
+{/if}
