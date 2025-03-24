@@ -6,3 +6,15 @@ export type WikiListItem = {
 };
 
 export type WikiList = WikiListItem[];
+
+export type Language =
+  | 'en'
+  | 'es'
+  | 'fr'
+  | 'de'
+  | 'it'
+  | 'ja'
+  | 'ko'
+  | 'pt'
+  | 'ru'
+  | 'zh';

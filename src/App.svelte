@@ -4,13 +4,23 @@
 
   import Header from './lib/Header.svelte';
   import type { RandomPageResponse } from './lib/Wikipedia/types';
-  import { batchLoadingCount, debugMode } from './lib/constants';
+  import {
+    batchLoadingCount,
+    debugMode,
+    localStorageLanguageKey,
+    localStoragePrefix,
+  } from './lib/constants';
   import { placeholderResponse } from './lib/data';
   import { favoriteList, historyList } from './lib/stores';
+  import type { Language } from './lib/types';
   import Favorite from './lib/views/Favorite.svelte';
   import History from './lib/views/History.svelte';
   import Home from './lib/views/Home.svelte';
 
+  let language =
+    (localStorage.getItem(
+      localStoragePrefix + localStorageLanguageKey
+    ) as Language) || 'en';
   let stored: RandomPageResponse[] = $state([placeholderResponse]);
 
   let hash = $state(window.location.hash);
@@ -21,7 +31,9 @@
 
     for (let i = 0; i < batchLoadingCount; i++) {
       tasks.push(
-        fetch('https://en.wikipedia.org/api/rest_v1/page/random/summary')
+        fetch(
+          `https://${language}.wikipedia.org/api/rest_v1/page/random/summary`
+        )
       );
     }
 
