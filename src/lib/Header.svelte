@@ -19,7 +19,9 @@
         </a>
       </li>
       <li>
-        <i class="bi bi-clock"></i>
+        <a href="#history" title="Past visits">
+          <i class="bi bi-clock"></i>
+        </a>
       </li>
       <li>
         <i class="bi bi-translate"></i>

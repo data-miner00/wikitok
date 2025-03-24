@@ -8,6 +8,7 @@
   import { placeholderResponse } from './lib/data';
   import { favoriteList, historyList } from './lib/stores';
   import Favorite from './lib/views/Favorite.svelte';
+  import History from './lib/views/History.svelte';
   import Home from './lib/views/Home.svelte';
 
   let stored: RandomPageResponse[] = $state([placeholderResponse]);
@@ -73,4 +74,8 @@
 
 {#if hash == '#favorites'}
   <Favorite />
+{/if}
+
+{#if hash == '#history'}
+  <History />
 {/if}
