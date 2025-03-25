@@ -4,7 +4,6 @@
   import WikiItem from '../WikiItem.svelte';
   import type { RandomPageResponse } from '../Wikipedia/types';
   import {
-    debugMode,
     localStorageFavoriteKey,
     localStorageHistoryKey,
     localStoragePrefix,
@@ -74,11 +73,6 @@
       ) {
         lastExecuted = new Date();
         loadNewPages();
-      }
-
-      if (debugMode) {
-        console.log(totalHeight);
-        console.log(scrollHeight);
       }
     }
 

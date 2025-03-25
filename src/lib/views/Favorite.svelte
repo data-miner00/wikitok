@@ -7,8 +7,6 @@
   let stored = $state<WikiListItem[]>([]);
 
   favoriteList.subscribe((value) => {
-    console.log('from store for favorites');
-    console.log(value);
     stored = value;
   });
 
@@ -33,6 +31,7 @@
       excerpt={page.extract}
       onVisit={() => {}}
       onFavorite={() => removeFromFavorite(page.title)}
+      isFaved={true}
     />
   {/each}
 </main>

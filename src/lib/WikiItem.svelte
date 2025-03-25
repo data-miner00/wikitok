@@ -6,14 +6,22 @@
     wikiUrl: string;
     title: string;
     excerpt: string;
+    isFaved?: boolean;
     onVisit: (item: WikiListItem) => void;
     onFavorite: (item: WikiListItem, isFavorite: boolean) => void;
   };
 
-  let isFavorite = $state(false);
+  let {
+    backgroundUrl,
+    wikiUrl,
+    title,
+    excerpt,
+    onVisit,
+    onFavorite,
+    isFaved,
+  }: Props = $props();
 
-  let { backgroundUrl, wikiUrl, title, excerpt, onVisit, onFavorite }: Props =
-    $props();
+  let isFavorite = $state<boolean>(!!isFaved);
 
   function handleClick(event: MouseEvent) {
     onVisit({
