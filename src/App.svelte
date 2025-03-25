@@ -1,17 +1,14 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-  import type { Unsubscriber } from 'svelte/store';
+  import { onMount } from 'svelte';
 
   import Header from './lib/Header.svelte';
   import type { RandomPageResponse } from './lib/Wikipedia/types';
   import {
     batchLoadingCount,
-    debugMode,
     localStorageLanguageKey,
     localStoragePrefix,
   } from './lib/constants';
   import { placeholderResponse } from './lib/data';
-  import { favoriteList, historyList } from './lib/stores';
   import type { Language } from './lib/types';
   import Favorite from './lib/views/Favorite.svelte';
   import History from './lib/views/History.svelte';
@@ -24,7 +21,6 @@
   let stored: RandomPageResponse[] = $state([placeholderResponse]);
 
   let hash = $state(window.location.hash);
-  let storeSubscriptions: Unsubscriber[] = [];
 
   async function execute() {
     const tasks: Promise<Response>[] = [];
@@ -52,30 +48,7 @@
     window.addEventListener('hashchange', () => {
       hash = window.location.hash;
     });
-
-    if (debugMode) {
-      storeSubscriptions.push(
-        historyList.subscribe((value) => {
-          console.log('from store for history');
-          console.log(value);
-        })
-      );
-
-      storeSubscriptions.push(
-        favoriteList.subscribe((value) => {
-          console.log('from store for favorites');
-          console.log(value);
-        })
-      );
-    }
-
-    return () => {
-      storeSubscriptions.forEach((x) => x());
-      storeSubscriptions = [];
-    };
   });
-
-  onDestroy(() => {});
 </script>
 
 <Header />
