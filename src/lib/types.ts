@@ -17,4 +17,8 @@ export type Language =
   | 'ko'
   | 'pt'
   | 'ru'
+  | 'sv'
+  | 'pl'
+  | 'id'
+  | 'ms'
   | 'zh';
