@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
 
   import WikiItem from '../WikiItem.svelte';
   import type { RandomPageResponse } from '../Wikipedia/types';
@@ -23,6 +24,12 @@
 
   let lastExecuted: Date;
   function addWikiToHistoryLocalStorage(item: WikiListItem) {
+    const existing = get(historyList);
+
+    if (existing.find((x) => x.title === item.title)) {
+      return;
+    }
+
     historyList.update((value) => {
       const updatedList = [...value, item];
       localStorage.setItem(
@@ -46,6 +53,12 @@
         );
         return updatedList;
       });
+      return;
+    }
+
+    const existing = get(favoriteList);
+
+    if (existing.find((x) => x.title === item.title)) {
       return;
     }
 
