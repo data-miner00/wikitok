@@ -11,6 +11,7 @@
   }
 
   let isLanguageMenuOpen = $state(false);
+  let isMenuExpanded = $state(false);
 
   function toggleLanguageMenu() {
     isLanguageMenuOpen = !isLanguageMenuOpen;
@@ -39,15 +40,26 @@
 >
   <div>
     <a
-      href="/"
+      href="#"
       class="text-2xl font-semibold tracking-wider uppercase"
       title="Home">Wikitok</a
     >
   </div>
-  <nav>
-    <ul class="flex items-center gap-3 text-xl">
+
+  <div class="flex items-center gap-8">
+    <ul
+      class="relative items-center gap-3 text-xl after:absolute after:top-2 after:-right-5 after:h-4 after:w-px after:bg-white/40 {isMenuExpanded
+        ? 'flex'
+        : 'hidden'}"
+    >
       <li>
-        <a href="#"> Home </a>
+        <a
+          href="https://github.com/data-miner00/wikitok"
+          title="GitHub repository"
+          target="_blank"
+        >
+          <i class="bi bi-github"></i>
+        </a>
       </li>
       <li>
         <a href="#favorites" title="Favorites">
@@ -81,5 +93,12 @@
         {/if}
       </li>
     </ul>
-  </nav>
+
+    <button
+      class="cursor-pointer text-2xl text-white"
+      onclick={() => (isMenuExpanded = !isMenuExpanded)}
+    >
+      <i class="bi {isMenuExpanded ? 'bi-x-lg' : 'bi-list'}"></i>
+    </button>
+  </div>
 </header>
