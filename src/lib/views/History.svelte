@@ -24,5 +24,9 @@
       onVisit={() => {}}
       onFavorite={() => {}}
     />
+  {:else}
+    <div class="text-center bg-black grid place-items-center h-full text-white">
+      <p class="block w-fit text-2xl uppercase">No history yet</p>
+    </div>
   {/each}
 </main>

@@ -33,5 +33,9 @@
       onFavorite={() => removeFromFavorite(page.title)}
       isFaved={true}
     />
+  {:else}
+    <div class="text-center bg-black grid place-items-center h-full text-white">
+      <p class="block w-fit text-2xl uppercase">No favorites yet</p>
+    </div>
   {/each}
 </main>
