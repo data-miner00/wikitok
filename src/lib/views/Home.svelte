@@ -10,6 +10,7 @@
     throttleTimeInMilliseconds,
     triggerFetchPercentageThreshold,
   } from '../constants';
+  import { placeholderResponse } from '../data';
   import { favoriteList, historyList } from '../stores';
   import type { WikiListItem } from '../types';
 
@@ -90,6 +91,15 @@
       wikiUrl={page.content_urls.desktop.page}
       title={page.title}
       excerpt={page.extract}
+      onVisit={addWikiToHistoryLocalStorage}
+      onFavorite={addWikiToFavoritesLocalStorage}
+    />
+  {:else}
+    <WikiItem
+      backgroundUrl={placeholderResponse.originalimage.source}
+      wikiUrl={placeholderResponse.content_urls.desktop.page}
+      title={placeholderResponse.title}
+      excerpt={placeholderResponse.extract}
       onVisit={addWikiToHistoryLocalStorage}
       onFavorite={addWikiToFavoritesLocalStorage}
     />

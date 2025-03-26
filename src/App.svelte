@@ -8,7 +8,6 @@
     localStorageLanguageKey,
     localStoragePrefix,
   } from './lib/constants';
-  import { placeholderResponse } from './lib/data';
   import type { Language } from './lib/types';
   import Favorite from './lib/views/Favorite.svelte';
   import History from './lib/views/History.svelte';
@@ -18,7 +17,7 @@
     (localStorage.getItem(
       localStoragePrefix + localStorageLanguageKey
     ) as Language) || 'en';
-  let stored: RandomPageResponse[] = $state([placeholderResponse]);
+  let stored: RandomPageResponse[] = $state([]);
 
   let hash = $state(window.location.hash);
 
