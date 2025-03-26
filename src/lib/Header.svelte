@@ -72,7 +72,7 @@
         </a>
       </li>
       <li class="relative">
-        <button class="" onclick={toggleLanguageMenu}>
+        <button class="cursor-pointer" onclick={toggleLanguageMenu}>
           <i class="bi bi-translate"></i>
         </button>
 

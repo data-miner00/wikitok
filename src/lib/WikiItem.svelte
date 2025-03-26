@@ -45,6 +45,19 @@
       isFavorite
     );
   }
+
+  function copyToClipboard(content: string): void {
+    if (!navigator.clipboard) {
+      const el = document.createElement('input');
+      el.value = content;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    } else {
+      navigator.clipboard.writeText(content);
+    }
+  }
 </script>
 
 <article
@@ -74,9 +87,13 @@
           <i class="bi bi-heart"></i>
         {/if}
       </button>
-      <div class="text-2xl">
+      <button
+        class="block cursor-pointer text-2xl"
+        title="Copy link to clipboard"
+        onclick={() => copyToClipboard(wikiUrl)}
+      >
         <i class="bi bi-link-45deg"></i>
-      </div>
+      </button>
     </div>
     <p>{excerpt}</p>
   </div>
