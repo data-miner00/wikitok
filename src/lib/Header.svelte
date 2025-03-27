@@ -15,6 +15,18 @@
 
   function toggleLanguageMenu() {
     isLanguageMenuOpen = !isLanguageMenuOpen;
+
+    // Automatically focus the first language button
+    if (isLanguageMenuOpen) {
+      setTimeout(() => {
+        const firstLanguageButton = document.querySelector(
+          '#language-menu button'
+        );
+        if (firstLanguageButton && firstLanguageButton instanceof HTMLElement) {
+          firstLanguageButton.focus();
+        }
+      }, 0);
+    }
   }
 
   const languageMap: Record<Language, string> = {
@@ -46,46 +58,68 @@
     >
   </div>
 
-  <div class="flex items-center gap-8">
+  <nav class="flex items-center gap-8">
     <ul
       class="relative items-center gap-3 text-xl after:absolute after:top-2 after:-right-5 after:h-4 after:w-px after:bg-white/40 {isMenuExpanded
         ? 'flex'
         : 'hidden'}"
+      id="menu"
     >
       <li>
         <a
           href="https://github.com/data-miner00/wikitok"
           title="GitHub repository"
           target="_blank"
+          aria-label="GitHub repository"
+          rel="noopener noreferrer"
         >
-          <i class="bi bi-github"></i>
+          <i class="bi bi-github" aria-hidden="true"></i>
+          <span class="sr-only">GitHub repository</span>
         </a>
       </li>
       <li>
-        <a href="#favorites" title="Favorites">
-          <i class="bi bi-heart"></i>
+        <a href="#" title="Home" aria-label="Home">
+          <i class="bi bi-house" aria-hidden="true"></i>
+          <span class="sr-only">Home</span>
         </a>
       </li>
       <li>
-        <a href="#history" title="Past visits">
-          <i class="bi bi-clock"></i>
+        <a href="#favorites" title="Favorites" aria-label="Favorites">
+          <i class="bi bi-heart" aria-hidden="true"></i>
+          <span class="sr-only">Favorites</span>
+        </a>
+      </li>
+      <li>
+        <a href="#history" title="Past visits" aria-label="Past visits">
+          <i class="bi bi-clock" aria-hidden="true"></i>
+          <span class="sr-only">Past visits</span>
         </a>
       </li>
       <li class="relative">
-        <button class="cursor-pointer" onclick={toggleLanguageMenu}>
-          <i class="bi bi-translate"></i>
+        <button
+          id="language-toggle"
+          class="cursor-pointer"
+          onclick={toggleLanguageMenu}
+          aria-label="Change language"
+          aria-expanded={isLanguageMenuOpen}
+          aria-controls="language-menu"
+        >
+          <i class="bi bi-translate" aria-hidden="true"></i>
+          <span class="sr-only">Change language</span>
         </button>
 
         {#if isLanguageMenuOpen}
           <ul
+            id="language-menu"
             class="absolute right-0 -bottom-[570px] overflow-hidden rounded bg-white/20 text-lg shadow-md"
+            aria-labelledby="language-toggle"
           >
             {#each Object.keys(languageMap) as lang}
               <li>
                 <button
                   class="block w-full cursor-pointer px-2 py-1 transition-colors duration-150 hover:bg-white/60"
                   onclick={() => changeLanguage(lang as Language)}
-                  >{languageMap[lang as Language]}</button
+                  tabindex="0">{languageMap[lang as Language]}</button
                 >
               </li>
             {/each}
@@ -97,8 +131,12 @@
     <button
       class="cursor-pointer text-2xl text-white"
       onclick={() => (isMenuExpanded = !isMenuExpanded)}
+      aria-label="Toggle menu"
+      aria-expanded={isMenuExpanded}
+      aria-controls="menu"
     >
-      <i class="bi {isMenuExpanded ? 'bi-x-lg' : 'bi-list'}"></i>
+      <i class="bi {isMenuExpanded ? 'bi-x-lg' : 'bi-list'}" aria-hidden="true"
+      ></i>
     </button>
-  </div>
+  </nav>
 </header>

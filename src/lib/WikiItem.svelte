@@ -57,6 +57,8 @@
     } else {
       navigator.clipboard.writeText(content);
     }
+
+    alert('Link successfully copied to clipboard');
   }
 </script>
 
@@ -69,7 +71,7 @@
       <a
         href={wikiUrl}
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
         class="block text-3xl"
         onclick={handleClick}
       >
@@ -79,20 +81,24 @@
         class="block cursor-pointer"
         title={isFavorite ? 'Unfavorite' : 'Favorite'}
         onclick={handleFavorite}
-        aria-label="Favorite this item"
+        aria-label={isFavorite ? 'Unfavorite this item' : 'Favorite this item'}
       >
         {#if isFavorite}
           <i class="bi bi-heart-fill"></i>
+          <span class="sr-only">Unfavorite this item</span>
         {:else}
           <i class="bi bi-heart"></i>
+          <span class="sr-only">Favorite this item</span>
         {/if}
       </button>
       <button
         class="block cursor-pointer text-2xl"
         title="Copy link to clipboard"
         onclick={() => copyToClipboard(wikiUrl)}
+        aria-label="Copy link to clipboard"
       >
         <i class="bi bi-link-45deg"></i>
+        <span class="sr-only">Copy link to clipboard</span>
       </button>
     </div>
     <p>{excerpt}</p>
