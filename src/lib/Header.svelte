@@ -74,6 +74,18 @@
     >
       <li>
         <a
+          href="https://www.wikipedia.org/"
+          title="Wikipedia"
+          target="_blank"
+          aria-label="Wikipedia"
+          rel="noopener noreferrer"
+        >
+          <i class="bi bi-wikipedia" aria-hidden="true"></i>
+          <span class="sr-only">Wikipedia</span>
+        </a>
+      </li>
+      <li>
+        <a
           href="https://github.com/data-miner00/wikitok"
           title="GitHub repository"
           target="_blank"
