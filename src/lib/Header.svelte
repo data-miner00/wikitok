@@ -2,6 +2,12 @@
   import { localStorageLanguageKey, localStoragePrefix } from './constants';
   import type { Language } from './types';
 
+  type Props = {
+    currentLanguage: Language;
+  };
+
+  const { currentLanguage }: Props = $props();
+
   function changeLanguage(language: Language) {
     localStorage.setItem(
       localStoragePrefix + localStorageLanguageKey,
@@ -56,6 +62,7 @@
       class="text-2xl font-semibold tracking-wider uppercase"
       title="Home">Wikitok</a
     >
+    <span>{currentLanguage}</span>
   </div>
 
   <nav class="flex items-center gap-8">

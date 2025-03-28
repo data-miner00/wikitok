@@ -50,7 +50,7 @@
   });
 </script>
 
-<Header />
+<Header currentLanguage={language} />
 
 {#if hash == ''}
   <Home randomPageResponses={stored} loadNewPages={execute} />
