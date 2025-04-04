@@ -1,6 +1,11 @@
 @import 'tailwindcss';
 @import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 
+body {
+  background-color: #1e1e1e;
+  color: white;
+}
+
 h1,
 h2,
 h3,
