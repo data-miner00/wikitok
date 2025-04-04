@@ -30,6 +30,8 @@
       return;
     }
 
+    item.visitedAt = new Date().toISOString();
+
     historyList.update((value) => {
       const updatedList = [...value, item];
       localStorage.setItem(
@@ -61,6 +63,8 @@
     if (existing.find((x) => x.title === item.title)) {
       return;
     }
+
+    item.favoritedAt = new Date().toISOString();
 
     favoriteList.update((value) => {
       const updatedList = [...value, item];

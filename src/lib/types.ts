@@ -3,6 +3,8 @@ export type WikiListItem = {
   extract: string;
   thumbnail: string;
   url: string;
+  visitedAt?: string;
+  favoritedAt?: string;
 };
 
 export type WikiList = WikiListItem[];
