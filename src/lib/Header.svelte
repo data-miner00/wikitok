@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Listover from './Listover.svelte';
   import { localStorageLanguageKey, localStoragePrefix } from './constants';
   import type { Language } from './types';
 
@@ -18,6 +19,7 @@
 
   let isLanguageMenuOpen = $state(false);
   let isMenuExpanded = $state(false);
+  let isFavoriteOpen = $state(false);
 
   function toggleLanguageMenu() {
     isLanguageMenuOpen = !isLanguageMenuOpen;
@@ -103,10 +105,14 @@
         </a>
       </li>
       <li>
-        <a href="#favorites" title="Favorites" aria-label="Favorites">
+        <button
+          title="Favorites"
+          aria-label="Favorites"
+          onclick={() => (isFavoriteOpen = !isFavoriteOpen)}
+        >
           <i class="bi bi-heart" aria-hidden="true"></i>
           <span class="sr-only">Favorites</span>
-        </a>
+        </button>
       </li>
       <li>
         <a href="#history" title="Past visits" aria-label="Past visits">
@@ -159,3 +165,5 @@
     </button>
   </nav>
 </header>
+
+<Listover bind:isOpen={isFavoriteOpen} />
