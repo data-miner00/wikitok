@@ -11,8 +11,6 @@
   } from './lib/constants';
   import { favoriteList, historyList } from './lib/stores';
   import type { Language, WikiList } from './lib/types';
-  import Favorite from './lib/views/Favorite.svelte';
-  import History from './lib/views/History.svelte';
   import Home from './lib/views/Home.svelte';
 
   let language =
@@ -67,31 +65,21 @@
   bind:isHistoryDialogOpen
 />
 
-{#if hash == ''}
-  {#await execute()}
-    <span class="loader absolute top-1/2 left-1/2 block"></span>
-  {:then _}
-    <Home randomPageResponses={stored} loadNewPages={execute} />
-  {:catch error}
-    <div
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center"
-    >
-      <div>
-        <i class="bi bi-exclamation-diamond text-3xl"></i>
-      </div>
-      <p>Something went wrong. Please refresh the web page.</p>
-      <p class="sr-only">{error.message}</p>
+{#await execute()}
+  <span class="loader absolute top-1/2 left-1/2 block"></span>
+{:then _}
+  <Home randomPageResponses={stored} loadNewPages={execute} />
+{:catch error}
+  <div
+    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center"
+  >
+    <div>
+      <i class="bi bi-exclamation-diamond text-3xl"></i>
     </div>
-  {/await}
-{/if}
-
-{#if hash == '#favorites'}
-  <Favorite />
-{/if}
-
-{#if hash == '#history'}
-  <History />
-{/if}
+    <p>Something went wrong. Please refresh the web page.</p>
+    <p class="sr-only">{error.message}</p>
+  </div>
+{/await}
 
 <Listover
   dialogTitle="Favorites"

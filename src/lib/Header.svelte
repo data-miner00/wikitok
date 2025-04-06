@@ -64,7 +64,7 @@
 >
   <div>
     <a
-      href="#"
+      href="/"
       class="text-2xl font-semibold tracking-wider uppercase"
       title="Home">Wikitok</a
     >
@@ -103,13 +103,8 @@
         </a>
       </li>
       <li>
-        <a href="#" title="Home" aria-label="Home">
-          <i class="bi bi-house" aria-hidden="true"></i>
-          <span class="sr-only">Home</span>
-        </a>
-      </li>
-      <li>
         <button
+          class="cursor-pointer"
           title="Favorites"
           aria-label="Favorites"
           onclick={() => (isFavoriteDialogOpen = !isFavoriteDialogOpen)}
@@ -120,6 +115,7 @@
       </li>
       <li>
         <button
+          class="cursor-pointer"
           title="Past visits"
           aria-label="Past visits"
           onclick={() => (isHistoryDialogOpen = !isHistoryDialogOpen)}
