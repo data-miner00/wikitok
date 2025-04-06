@@ -1,13 +1,14 @@
 <script lang="ts">
   import ListoverItem from './ListoverItem.svelte';
-  import { favoriteList } from './stores';
   import type { WikiList } from './types';
 
   type Props = {
+    dialogTitle: string;
     isOpen: boolean;
+    wikiList: WikiList;
   };
 
-  let { isOpen = $bindable() }: Props = $props();
+  let { isOpen = $bindable(), wikiList, dialogTitle }: Props = $props();
 
   let dialog = $state<HTMLDialogElement | null>(null);
   let query = $state<string>('');
@@ -16,21 +17,15 @@
     if (isOpen) dialog?.showModal();
   });
 
-  let stored = $state<WikiList>([]);
-  let filtered = $state<WikiList>([]);
-
-  favoriteList.subscribe((value) => {
-    stored = value;
-    filtered = value;
-  });
+  let filtered = $state<WikiList>(wikiList);
 
   function onFilter(event: Event) {
     if (query.length === 0) {
-      filtered = stored;
+      filtered = wikiList;
       return;
     }
 
-    filtered = stored.filter((item) => {
+    filtered = wikiList.filter((item) => {
       return (
         item.title.toLowerCase().includes(query) ||
         item.extract.toLowerCase().includes(query)
@@ -43,7 +38,7 @@
   bind:this={dialog}
   onclose={() => {
     query = '';
-    filtered = stored;
+    filtered = wikiList;
     isOpen = false;
   }}
   onclick={(e) => {
@@ -51,7 +46,7 @@
   }}
   class="fixed top-[5%] left-1/2 mx-auto my-[5%] max-h-4/5 w-4/5 -translate-x-1/2 overflow-y-auto border-[1px] border-solid border-[#444] bg-[#222] p-4 text-white"
 >
-  <h2 class="mb-4 text-3xl font-bold">Favorites</h2>
+  <h2 class="mb-4 text-3xl font-bold">{dialogTitle}</h2>
 
   <div>
     <input
@@ -65,7 +60,7 @@
 
   <ul>
     {#each filtered as item}
-      <li class="p-2">
+      <li class="my-2">
         <ListoverItem
           wikiUrl={item.url}
           imageUrl={item.thumbnail}

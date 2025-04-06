@@ -1,13 +1,18 @@
 <script lang="ts">
-  import Listover from './Listover.svelte';
   import { localStorageLanguageKey, localStoragePrefix } from './constants';
   import type { Language } from './types';
 
   type Props = {
     currentLanguage: Language;
+    isHistoryDialogOpen: boolean;
+    isFavoriteDialogOpen: boolean;
   };
 
-  const { currentLanguage }: Props = $props();
+  let {
+    currentLanguage,
+    isFavoriteDialogOpen = $bindable(),
+    isHistoryDialogOpen = $bindable(),
+  }: Props = $props();
 
   function changeLanguage(language: Language) {
     localStorage.setItem(
@@ -19,7 +24,6 @@
 
   let isLanguageMenuOpen = $state(false);
   let isMenuExpanded = $state(false);
-  let isFavoriteOpen = $state(false);
 
   function toggleLanguageMenu() {
     isLanguageMenuOpen = !isLanguageMenuOpen;
@@ -108,17 +112,21 @@
         <button
           title="Favorites"
           aria-label="Favorites"
-          onclick={() => (isFavoriteOpen = !isFavoriteOpen)}
+          onclick={() => (isFavoriteDialogOpen = !isFavoriteDialogOpen)}
         >
           <i class="bi bi-heart" aria-hidden="true"></i>
           <span class="sr-only">Favorites</span>
         </button>
       </li>
       <li>
-        <a href="#history" title="Past visits" aria-label="Past visits">
+        <button
+          title="Past visits"
+          aria-label="Past visits"
+          onclick={() => (isHistoryDialogOpen = !isHistoryDialogOpen)}
+        >
           <i class="bi bi-clock" aria-hidden="true"></i>
           <span class="sr-only">Past visits</span>
-        </a>
+        </button>
       </li>
       <li class="relative">
         <button
@@ -165,5 +173,3 @@
     </button>
   </nav>
 </header>
-
-<Listover bind:isOpen={isFavoriteOpen} />

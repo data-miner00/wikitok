@@ -2,13 +2,15 @@
   import { onMount } from 'svelte';
 
   import Header from './lib/Header.svelte';
+  import Listover from './lib/Listover.svelte';
   import type { RandomPageResponse } from './lib/Wikipedia/types';
   import {
     batchLoadingCount,
     localStorageLanguageKey,
     localStoragePrefix,
   } from './lib/constants';
-  import type { Language } from './lib/types';
+  import { favoriteList, historyList } from './lib/stores';
+  import type { Language, WikiList } from './lib/types';
   import Favorite from './lib/views/Favorite.svelte';
   import History from './lib/views/History.svelte';
   import Home from './lib/views/Home.svelte';
@@ -20,6 +22,11 @@
   let stored: RandomPageResponse[] = $state([]);
 
   let hash = $state(window.location.hash);
+
+  let storedHistory: WikiList = $state([]);
+  let storedFavorites: WikiList = $state([]);
+  let isFavoriteDialogOpen = $state(false);
+  let isHistoryDialogOpen = $state(false);
 
   async function execute() {
     const tasks: Promise<Response>[] = [];
@@ -33,9 +40,7 @@
     }
 
     const results = await Promise.all(tasks);
-
     const pages = results.map((x) => x.json() as Promise<RandomPageResponse>);
-
     const responses = await Promise.all(pages);
 
     stored = [...stored, ...responses];
@@ -45,10 +50,22 @@
     window.addEventListener('hashchange', () => {
       hash = window.location.hash;
     });
+
+    historyList.subscribe((value) => {
+      storedHistory = value;
+    });
+
+    favoriteList.subscribe((value) => {
+      storedFavorites = value;
+    });
   });
 </script>
 
-<Header currentLanguage={language} />
+<Header
+  currentLanguage={language}
+  bind:isFavoriteDialogOpen
+  bind:isHistoryDialogOpen
+/>
 
 {#if hash == ''}
   {#await execute()}
@@ -75,6 +92,18 @@
 {#if hash == '#history'}
   <History />
 {/if}
+
+<Listover
+  dialogTitle="Favorites"
+  bind:isOpen={isFavoriteDialogOpen}
+  wikiList={storedFavorites}
+/>
+
+<Listover
+  dialogTitle="History"
+  bind:isOpen={isHistoryDialogOpen}
+  wikiList={storedHistory}
+/>
 
 <style>
   .loader {
