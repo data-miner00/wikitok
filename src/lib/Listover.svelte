@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Writable } from 'svelte/store';
+
   import ListoverItem from './ListoverItem.svelte';
   import type { WikiList } from './types';
 
@@ -6,39 +8,30 @@
     dialogTitle: string;
     isOpen: boolean;
     wikiList: WikiList;
+    queryStore: Writable<string>;
   };
 
-  let { isOpen = $bindable(), wikiList, dialogTitle }: Props = $props();
+  let {
+    isOpen = $bindable(),
+    wikiList,
+    dialogTitle,
+    queryStore,
+  }: Props = $props();
 
   let dialog = $state<HTMLDialogElement | null>(null);
   let query = $state<string>('');
 
   $effect(() => {
     if (isOpen) dialog?.showModal();
+
+    queryStore.set(query);
   });
-
-  let filtered = $state<WikiList>(wikiList);
-
-  function onFilter(event: Event) {
-    if (query.length === 0) {
-      filtered = wikiList;
-      return;
-    }
-
-    filtered = wikiList.filter((item) => {
-      return (
-        item.title.toLowerCase().includes(query) ||
-        item.extract.toLowerCase().includes(query)
-      );
-    });
-  }
 </script>
 
 <dialog
   bind:this={dialog}
   onclose={() => {
     query = '';
-    filtered = wikiList;
     isOpen = false;
   }}
   onclick={(e) => {
@@ -54,12 +47,11 @@
       placeholder="Search..."
       class="mb-4 w-full border-[1px] border-solid border-[#444] bg-[#333] p-2 outline-0"
       bind:value={query}
-      onkeyup={onFilter}
     />
   </div>
 
   <ul>
-    {#each filtered as item}
+    {#each wikiList as item}
       <li class="my-2">
         <ListoverItem
           wikiUrl={item.url}

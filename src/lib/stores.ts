@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 
 import {
   localStorageFavoriteKey,
@@ -7,6 +7,7 @@ import {
 } from './constants';
 import type { WikiList } from './types';
 
+export const historyQuery = writable('');
 export const historyList = writable<WikiList>(
   localStorage.getItem(localStoragePrefix + localStorageHistoryKey)
     ? JSON.parse(
@@ -16,6 +17,16 @@ export const historyList = writable<WikiList>(
       )
     : []
 );
+export const filteredHistoryList = derived(
+  [historyQuery, historyList],
+  ([$historyQuery, $historyList]) =>
+    $historyList.filter(
+      (x) =>
+        x.title.includes($historyQuery) || x.extract.includes($historyQuery)
+    )
+);
+
+export const favoriteQuery = writable('');
 export const favoriteList = writable<WikiList>(
   localStorage.getItem(localStoragePrefix + localStorageFavoriteKey)
     ? JSON.parse(
@@ -24,4 +35,12 @@ export const favoriteList = writable<WikiList>(
         ) as string
       )
     : []
+);
+export const filteredFavoriteList = derived(
+  [favoriteQuery, favoriteList],
+  ([$favoriteQuery, $favoriteList]) =>
+    $favoriteList.filter(
+      (x) =>
+        x.title.includes($favoriteQuery) || x.extract.includes($favoriteQuery)
+    )
 );

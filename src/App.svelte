@@ -9,7 +9,12 @@
     localStorageLanguageKey,
     localStoragePrefix,
   } from './lib/constants';
-  import { favoriteList, historyList } from './lib/stores';
+  import {
+    favoriteQuery,
+    filteredFavoriteList,
+    filteredHistoryList,
+    historyQuery,
+  } from './lib/stores';
   import type { Language, WikiList } from './lib/types';
   import Home from './lib/views/Home.svelte';
 
@@ -49,11 +54,11 @@
       hash = window.location.hash;
     });
 
-    historyList.subscribe((value) => {
+    filteredHistoryList.subscribe((value) => {
       storedHistory = value;
     });
 
-    favoriteList.subscribe((value) => {
+    filteredFavoriteList.subscribe((value) => {
       storedFavorites = value;
     });
   });
@@ -85,12 +90,14 @@
   dialogTitle="Favorites"
   bind:isOpen={isFavoriteDialogOpen}
   wikiList={storedFavorites}
+  queryStore={favoriteQuery}
 />
 
 <Listover
   dialogTitle="History"
   bind:isOpen={isHistoryDialogOpen}
   wikiList={storedHistory}
+  queryStore={historyQuery}
 />
 
 <style>
