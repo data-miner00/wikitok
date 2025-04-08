@@ -14,7 +14,7 @@ Why create the same thing that already exist? It gives me all the control I want
 - [ ] Social sharing
 - [ ] Change layout dynamically
 - [ ] Simple tests
-- [ ] Performance improvement (Scrolling animation janky, unnecessary calls to fetch new page, delays on typing search query, history and fav not display on first catch)
+- [ ] Performance improvement (Scrolling animation janky, unnecessary calls to fetch new page)
 - [ ] Lighthouse test
 
 ## Acknowledgements

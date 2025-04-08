@@ -3,6 +3,7 @@
 
   import Header from './lib/Header.svelte';
   import Listover from './lib/Listover.svelte';
+  import MobileSidebar from './lib/MobileSidebar.svelte';
   import type { RandomPageResponse } from './lib/Wikipedia/types';
   import {
     batchLoadingCount,
@@ -30,6 +31,7 @@
   let storedFavorites: WikiList = $state([]);
   let isFavoriteDialogOpen = $state(false);
   let isHistoryDialogOpen = $state(false);
+  let isMobileSidebarOpen = $state(false);
 
   async function execute() {
     const tasks: Promise<Response>[] = [];
@@ -64,10 +66,17 @@
   });
 </script>
 
+<MobileSidebar
+  bind:isOpen={isMobileSidebarOpen}
+  bind:isFavoriteDialogOpen
+  bind:isHistoryDialogOpen
+/>
+
 <Header
   currentLanguage={language}
   bind:isFavoriteDialogOpen
   bind:isHistoryDialogOpen
+  bind:isMobileSidebarOpen
 />
 
 {#await execute()}

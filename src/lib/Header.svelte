@@ -6,12 +6,14 @@
     currentLanguage: Language;
     isHistoryDialogOpen: boolean;
     isFavoriteDialogOpen: boolean;
+    isMobileSidebarOpen: boolean;
   };
 
   let {
     currentLanguage,
     isFavoriteDialogOpen = $bindable(),
     isHistoryDialogOpen = $bindable(),
+    isMobileSidebarOpen = $bindable(),
   }: Props = $props();
 
   function changeLanguage(language: Language) {
@@ -104,7 +106,7 @@
       </li>
       <li>
         <button
-          class="cursor-pointer"
+          class="cursor-pointer outline-0"
           title="Favorites"
           aria-label="Favorites"
           onclick={() => (isFavoriteDialogOpen = !isFavoriteDialogOpen)}
@@ -115,7 +117,7 @@
       </li>
       <li>
         <button
-          class="cursor-pointer"
+          class="cursor-pointer outline-0"
           title="Past visits"
           aria-label="Past visits"
           onclick={() => (isHistoryDialogOpen = !isHistoryDialogOpen)}
@@ -158,7 +160,17 @@
     </ul>
 
     <button
-      class="cursor-pointer text-2xl text-white"
+      class="cursor-pointer text-2xl lg:hidden"
+      onclick={() => (isMobileSidebarOpen = !isMobileSidebarOpen)}
+      aria-label="Toggle mobile menu"
+      aria-expanded={isMobileSidebarOpen}
+      aria-controls="mobile-menu"
+    >
+      <i class="bi bi-list" aria-hidden="true"></i>
+    </button>
+
+    <button
+      class="hidden cursor-pointer text-2xl text-white lg:block"
       onclick={() => (isMenuExpanded = !isMenuExpanded)}
       aria-label="Toggle menu"
       aria-expanded={isMenuExpanded}
