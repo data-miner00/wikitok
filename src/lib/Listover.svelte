@@ -37,11 +37,11 @@
   onclick={(e) => {
     if (e.target === dialog) dialog?.close();
   }}
-  class="fixed top-[5%] left-1/2 mx-auto my-[5%] max-h-4/5 w-4/5 -translate-x-1/2 overflow-y-auto border-[1px] border-solid border-[#444] bg-[#222] p-4 text-white"
+  class="fixed top-[5%] left-1/2 mx-auto my-[5%] max-h-4/5 w-4/5 -translate-x-1/2 overflow-y-auto border-[1px] border-solid border-[#444] bg-[#222] p-4 pt-0 text-white"
 >
-  <h2 class="mb-4 text-3xl font-bold">{dialogTitle}</h2>
+  <div class="sticky top-0 left-0 bg-[#222] py-4">
+    <h2 class="mb-4 text-3xl font-bold">{dialogTitle}</h2>
 
-  <div>
     <input
       type="text"
       placeholder="Search..."

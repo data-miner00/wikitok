@@ -1,5 +1,5 @@
 export const batchLoadingCount = 5;
-export const triggerFetchPercentageThreshold = 0.6;
+export const triggerFetchPercentageThreshold = 0.7;
 export const throttleTimeInMilliseconds = 2000;
 export const debugMode = false;
 export const defaultLanguage = 'en';
