@@ -41,6 +41,7 @@ export const filteredFavoriteList = derived(
   ([$favoriteQuery, $favoriteList]) =>
     $favoriteList.filter(
       (x) =>
-        x.title.includes($favoriteQuery) || x.extract.includes($favoriteQuery)
+        x.title.toLowerCase().includes($favoriteQuery.toLowerCase()) ||
+        x.extract.toLowerCase().includes($favoriteQuery.toLowerCase())
     )
 );
