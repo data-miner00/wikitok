@@ -7,6 +7,7 @@
   import type { RandomPageResponse } from './lib/Wikipedia/types';
   import {
     batchLoadingCount,
+    localStorageFavoriteKey,
     localStorageLanguageKey,
     localStoragePrefix,
   } from './lib/constants';
@@ -100,6 +101,8 @@
   bind:isOpen={isFavoriteDialogOpen}
   wikiList={storedFavorites}
   queryStore={favoriteQuery}
+  enableRemove
+  localStorageKey={localStoragePrefix + localStorageFavoriteKey}
 />
 
 <Listover

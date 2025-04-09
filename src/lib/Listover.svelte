@@ -9,6 +9,8 @@
     isOpen: boolean;
     wikiList: WikiList;
     queryStore: Writable<string>;
+    enableRemove?: boolean;
+    localStorageKey?: string;
   };
 
   let {
@@ -16,10 +18,20 @@
     wikiList,
     dialogTitle,
     queryStore,
+    enableRemove,
+    localStorageKey,
   }: Props = $props();
 
   let dialog = $state<HTMLDialogElement | null>(null);
   let query = $state<string>('');
+
+  let onXClick: ((id: string) => void) | undefined =
+    enableRemove && localStorageKey
+      ? (id: string) => {
+          wikiList = wikiList.filter((item) => item.url !== id);
+          localStorage.setItem(localStorageKey, JSON.stringify(wikiList));
+        }
+      : undefined;
 
   $effect(() => {
     if (isOpen) dialog?.showModal();
@@ -58,6 +70,7 @@
           imageUrl={item.thumbnail}
           title={item.title}
           excerpt={item.extract}
+          {onXClick}
         />
       </li>
     {/each}
