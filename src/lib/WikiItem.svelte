@@ -101,6 +101,18 @@
         <span class="sr-only">Copy link to clipboard</span>
       </button>
     </div>
-    <p>{excerpt}</p>
+    <p>
+      <span class="md:hidden">
+        {#if excerpt.length > 200}
+          {excerpt.slice(0, 200)}...
+        {:else}
+          {excerpt}
+        {/if}
+      </span>
+
+      <span class="hidden md:inline" aria-hidden="true">
+        {excerpt}
+      </span>
+    </p>
   </div>
 </article>
