@@ -49,9 +49,9 @@
   onclick={(e) => {
     if (e.target === dialog) dialog?.close();
   }}
-  class="fixed top-[5%] left-1/2 mx-auto my-[5%] max-h-4/5 w-4/5 -translate-x-1/2 overflow-y-auto border-[1px] border-solid border-[#444] bg-[#222] p-4 pt-0 text-white"
+  class="fixed top-[5%] left-1/2 mx-auto my-[5%] max-h-4/5 w-7/8 -translate-x-1/2 overflow-y-auto border-[1px] border-solid border-[#444] bg-[#222] p-4 pt-0 text-white md:w-4/5"
 >
-  <div class="sticky top-0 left-0 bg-[#222] py-4">
+  <div class="sticky top-0 left-0 z-20 bg-[#222] py-4">
     <h2 class="mb-4 text-3xl font-bold">{dialogTitle}</h2>
 
     <input
@@ -64,7 +64,7 @@
 
   <ul>
     {#each wikiList as item}
-      <li class="my-2">
+      <li class="my-6 first:mt-0 md:my-2">
         <ListoverItem
           wikiUrl={item.url}
           imageUrl={item.thumbnail}

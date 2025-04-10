@@ -17,29 +17,47 @@
 </script>
 
 <div class="group">
-  <article class="flex items-center">
+  <article class="relative flex items-center">
     <a
       class="flex items-center"
       href={wikiUrl}
       target="_blank"
       rel="noopener noreferrer"
     >
-      <div class="h-[100px] basis-[100px]">
+      <div class="hidden h-[100px] basis-[100px] md:block">
         <!-- todo: use smaller image -->
         <img class="h-full w-full object-cover" src={imageUrl} alt={title} />
       </div>
       <div
         class="{onXClick
-          ? 'basis-[calc(100%-150px)]'
-          : 'basis-[calc(100%-100px)]'} pl-4"
+          ? 'md:basis-[calc(100%-150px)]'
+          : 'md:basis-[calc(100%-100px)]'} md:pl-4"
       >
         <h2 class="text-2xl group-hover:text-gray-300">{title}</h2>
-        <p class="text-sm">{excerpt}</p>
+        <p class="text-sm">
+          <span class="md:hidden">
+            {#if excerpt.length > 200}
+              {excerpt.slice(0, 200)}...
+            {:else}
+              {excerpt}
+            {/if}
+          </span>
+
+          <span class="hidden md:inline" aria-hidden="true">
+            {excerpt}
+          </span>
+        </p>
       </div>
     </a>
     {#if onXClick}
-      <div class="ml-auto basis-[50px]" onclick={onRemove}>
-        <button class="mx-auto block cursor-pointer">
+      <div
+        class="absolute top-0 right-0 z-10 md:ml-auto md:block md:basis-[50px]"
+      >
+        <button
+          class="mx-auto block cursor-pointer"
+          aria-label="Remove from list"
+          onclick={onRemove}
+        >
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
