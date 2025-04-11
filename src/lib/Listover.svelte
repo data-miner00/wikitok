@@ -60,6 +60,8 @@
       class="mb-4 w-full border-[1px] border-solid border-[#444] bg-[#333] p-2 outline-0"
       bind:value={query}
     />
+
+    <!-- TODO: Add X button to clear the query -->
   </div>
 
   <ul>
@@ -67,7 +69,7 @@
       <li class="my-6 first:mt-0 md:my-2">
         <ListoverItem
           wikiUrl={item.url}
-          imageUrl={item.thumbnail}
+          imageUrl={item.smallThumbnail}
           title={item.title}
           excerpt={item.extract}
           {onXClick}

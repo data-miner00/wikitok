@@ -85,6 +85,7 @@
       const totalHeight = target.scrollHeight;
       const scrollHeight = target.scrollTop;
 
+      // Revisit debounce
       if (
         scrollHeight / totalHeight > triggerFetchPercentageThreshold &&
         Date.now() - lastExecuted.getTime() > throttleTimeInMilliseconds
@@ -101,13 +102,14 @@
   });
 </script>
 
-<main class="h-dvh h-screen snap-y snap-mandatory overflow-y-scroll">
+<main class="h-dvh snap-y snap-mandatory overflow-y-scroll">
   {#each randomPageResponses as page}
     <WikiItem
       backgroundUrl={page.originalimage.source}
       wikiUrl={page.content_urls.desktop.page}
       title={page.title}
       excerpt={page.extract}
+      smallBackgroundUrl={page.thumbnail.source}
       onVisit={addWikiToHistoryLocalStorage}
       onFavorite={addWikiToFavoritesLocalStorage}
     />
@@ -117,6 +119,7 @@
       wikiUrl={placeholderResponse.content_urls.desktop.page}
       title={placeholderResponse.title}
       excerpt={placeholderResponse.extract}
+      smallBackgroundUrl={placeholderResponse.thumbnail.source}
       onVisit={addWikiToHistoryLocalStorage}
       onFavorite={addWikiToFavoritesLocalStorage}
     />

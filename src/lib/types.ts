@@ -2,6 +2,7 @@ export type WikiListItem = {
   title: string;
   extract: string;
   thumbnail: string;
+  smallThumbnail: string;
   url: string;
   visitedAt?: string;
   favoritedAt?: string;

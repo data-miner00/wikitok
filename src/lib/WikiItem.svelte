@@ -7,6 +7,7 @@
     title: string;
     excerpt: string;
     isFaved?: boolean;
+    smallBackgroundUrl: string;
     onVisit: (item: WikiListItem) => void;
     onFavorite: (item: WikiListItem, isFavorite: boolean) => void;
   };
@@ -19,6 +20,7 @@
     onVisit,
     onFavorite,
     isFaved,
+    smallBackgroundUrl,
   }: Props = $props();
 
   let isFavorite = $state<boolean>(!!isFaved);
@@ -29,6 +31,7 @@
       extract: excerpt,
       url: wikiUrl,
       thumbnail: backgroundUrl,
+      smallThumbnail: smallBackgroundUrl,
     } as WikiListItem);
   }
 
@@ -41,6 +44,7 @@
         extract: excerpt,
         url: wikiUrl,
         thumbnail: backgroundUrl,
+        smallThumbnail: smallBackgroundUrl,
       } as WikiListItem,
       isFavorite
     );

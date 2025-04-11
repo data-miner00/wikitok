@@ -34,7 +34,7 @@
           : 'md:basis-[calc(100%-100px)]'} md:pl-4"
       >
         <h2 class="text-2xl group-hover:text-gray-300">{title}</h2>
-        <p class="text-sm">
+        <p class="text-sm md:text-base">
           <span class="md:hidden">
             {#if excerpt.length > 200}
               {excerpt.slice(0, 200)}...
