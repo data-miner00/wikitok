@@ -17,6 +17,20 @@ Why create the same thing that already exist? It gives me all the control I want
 - [ ] Performance improvement (Scrolling animation janky, unnecessary calls to fetch new page)
 - [ ] Lighthouse test
 
+## Running on Docker
+
+Build the application into an image.
+
+```
+docker build . -t wikitok
+```
+
+Instantiate the image into a container and running it in the background.
+
+```
+docker run --name=wikitok -p 5000:80 -d wikitok
+```
+
 ## Acknowledgements
 
 Special thanks to the respective authors of wikitok and arxivtok for the inspiration, and more importantly the Wikipedia foundation, for providing such an easy-to-use API endpoint to retrieve random pages from Wikipedia.
