@@ -52,7 +52,16 @@
   class="fixed top-[5%] left-1/2 mx-auto my-[5%] max-h-4/5 w-7/8 -translate-x-1/2 overflow-y-auto border-[1px] border-solid border-[#444] bg-[#222] p-4 pt-0 text-white md:w-4/5"
 >
   <div class="sticky top-0 left-0 z-20 bg-[#222] py-4">
-    <h2 class="mb-4 text-3xl font-bold">{dialogTitle}</h2>
+    <div class="flex items-center justify-between">
+      <h2 class="mb-4 block text-3xl font-bold">{dialogTitle}</h2>
+      <button
+        class="block cursor-pointer text-2xl"
+        aria-label="Close dialog"
+        onclick={() => dialog?.close()}
+      >
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
 
     <input
       type="text"

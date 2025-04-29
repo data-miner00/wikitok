@@ -131,7 +131,7 @@
             {#each Object.keys(languageMap) as lang}
               <li>
                 <button
-                  class="block w-full cursor-pointer px-2 py-1 transition-colors duration-150 hover:bg-white/60"
+                  class="block w-full cursor-pointer px-2 py-1 hover:bg-black/40"
                   onclick={() => changeLanguage(lang as Language)}
                   tabindex="0">{languageMap[lang as Language]}</button
                 >
