@@ -3,7 +3,12 @@
   import { Spring, Tween, prefersReducedMotion } from 'svelte/motion';
   import { fade, fly } from 'svelte/transition';
 
-  import { localStorageLanguageKey, localStoragePrefix } from './constants';
+  import {
+    gitHubRepoUrl,
+    localStorageLanguageKey,
+    localStoragePrefix,
+    wikipediaUrl,
+  } from './constants';
   import { type Language, languageMap } from './types';
 
   type Props = {
@@ -69,7 +74,7 @@
       >
         <li>
           <a
-            href="https://www.wikipedia.org/"
+            href={wikipediaUrl}
             title="Wikipedia"
             target="_blank"
             aria-label="Wikipedia"
@@ -81,7 +86,7 @@
         </li>
         <li>
           <a
-            href="https://github.com/data-miner00/wikitok"
+            href={gitHubRepoUrl}
             title="GitHub repository"
             target="_blank"
             aria-label="GitHub repository"

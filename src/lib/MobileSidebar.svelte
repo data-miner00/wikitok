@@ -1,5 +1,6 @@
 <script lang="ts">
   import { localStorageLanguageKey, localStoragePrefix } from './constants';
+  import { gitHubRepoUrl, wikipediaUrl } from './constants';
   import { type Language, languageMap } from './types';
 
   type Props = {
@@ -50,7 +51,7 @@
         aria-expanded={isLanguageMenuOpen}
         aria-controls="language-menu-sidebar"
       >
-        <i class="bi bi-translate"></i>
+        <i class="bi bi-translate" aria-hidden="true"></i>
 
         <span>Language</span>
       </button>
@@ -60,7 +61,7 @@
         class="cursor-pointer"
         onclick={() => (isFavoriteDialogOpen = !isFavoriteDialogOpen)}
       >
-        <i class="bi bi-heart"></i>
+        <i class="bi bi-heart" aria-hidden="true"></i>
 
         <span>Favorite</span>
       </button>
@@ -70,24 +71,34 @@
         class="cursor-pointer"
         onclick={() => (isHistoryDialogOpen = !isHistoryDialogOpen)}
       >
-        <i class="bi bi-clock"></i>
+        <i class="bi bi-clock" aria-hidden="true"></i>
 
         <span>History</span>
       </button>
     </li>
     <li class="w-full px-5 py-5 text-xl">
-      <button class="cursor-pointer">
-        <i class="bi bi-github"></i>
-
+      <a
+        href={gitHubRepoUrl}
+        title="GitHub repository"
+        target="_blank"
+        aria-label="GitHub repository"
+        rel="noopener noreferrer"
+      >
+        <i class="bi bi-github" aria-hidden="true"></i>
         <span>GitHub</span>
-      </button>
+      </a>
     </li>
     <li class="w-full px-5 py-5 text-xl">
-      <button class="cursor-pointer">
-        <i class="bi bi-wikipedia"></i>
-
+      <a
+        href={wikipediaUrl}
+        title="Wikipedia"
+        target="_blank"
+        aria-label="Wikipedia"
+        rel="noopener noreferrer"
+      >
+        <i class="bi bi-wikipedia" aria-hidden="true"></i>
         <span>Wikipedia</span>
-      </button>
+      </a>
     </li>
   </ul>
 </aside>
