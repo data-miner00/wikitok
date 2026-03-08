@@ -8,7 +8,7 @@ Why create the same thing that already exist? It gives me all the control I want
 
 ## Roadmap
 
-- [ ] PWA
+- [x] PWA
 - [ ] Google Analytics
 - [ ] Mobile responsive
 - [ ] Social sharing
@@ -33,4 +33,4 @@ docker run --name=wikitok -p 5000:80 -d wikitok
 
 ## Acknowledgements
 
-Special thanks to the respective authors of wikitok and arxivtok for the inspiration, and more importantly the Wikipedia foundation, for providing such an easy-to-use API endpoint to retrieve random pages from Wikipedia.
+Special thanks to the respective authors of wikitok and arxivtok for the inspiration, and more importantly the Wikimedia foundation, for providing such an easy-to-use API endpoint to retrieve random pages from Wikipedia.
