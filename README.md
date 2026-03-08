@@ -10,7 +10,7 @@ Why create the same thing that already exist? It gives me all the control I want
 
 - [x] PWA
 - [ ] Google Analytics
-- [ ] Mobile responsive
+- [x] Mobile responsive
 - [ ] Social sharing
 - [ ] Change layout dynamically
 - [ ] Simple tests
@@ -29,6 +29,12 @@ Instantiate the image into a container and running it in the background.
 
 ```
 docker run --name=wikitok -p 5000:80 -d wikitok
+```
+
+Or use Docker Compose.
+
+```
+docker-compose up -d
 ```
 
 ## Acknowledgements

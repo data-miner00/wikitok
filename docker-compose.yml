@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  wikitok:
+    build: .
+    container_name: wikitok
+    ports:
+      - '5000:80'
+    restart: unless-stopped
