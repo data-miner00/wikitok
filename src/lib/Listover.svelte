@@ -124,6 +124,8 @@
           {onXClick}
         />
       </li>
+    {:else}
+      <li class="text-xl">There are no items in the list.</li>
     {/each}
   </ul>
 </dialog>
