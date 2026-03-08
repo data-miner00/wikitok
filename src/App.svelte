@@ -8,6 +8,7 @@
   import {
     batchLoadingCount,
     localStorageFavoriteKey,
+    localStorageHistoryKey,
     localStorageLanguageKey,
     localStoragePrefix,
   } from './lib/constants';
@@ -110,6 +111,7 @@
   bind:isOpen={isHistoryDialogOpen}
   wikiList={storedHistory}
   queryStore={historyQuery}
+  localStorageKey={localStoragePrefix + localStorageHistoryKey}
 />
 
 <style>

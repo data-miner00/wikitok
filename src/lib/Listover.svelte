@@ -33,6 +33,17 @@
         }
       : undefined;
 
+  let clearAllItems: () => void = () => {
+    const confirmation = confirm(
+      'Are you sure you want to remove all items from this list?'
+    );
+
+    if (localStorageKey && confirmation) {
+      localStorage.removeItem(localStorageKey);
+      wikiList = [];
+    }
+  };
+
   $effect(() => {
     if (isOpen) dialog?.showModal();
 
@@ -63,12 +74,23 @@
       </button>
     </div>
 
-    <input
-      type="text"
-      placeholder="Search..."
-      class="mb-4 w-full border-[1px] border-solid border-[#444] bg-[#333] p-2 outline-0"
-      bind:value={query}
-    />
+    <div class="mb-4 flex items-center gap-4">
+      <input
+        type="text"
+        placeholder="Search..."
+        class="flex-1 border-[1px] border-solid border-[#444] bg-[#333] p-2 outline-0 focus:border-gray-500"
+        bind:value={query}
+      />
+
+      <button
+        class="flex h-10 w-10 cursor-pointer items-center justify-center border border-red-700 bg-red-500"
+        title="Clear all items"
+        onclick={clearAllItems}
+        aria-label="Remove all items from this list"
+      >
+        <i class="bi bi-trash-fill block"></i>
+      </button>
+    </div>
 
     <!-- TODO: Add X button to clear the query -->
   </div>
