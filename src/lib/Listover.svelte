@@ -24,6 +24,7 @@
 
   let dialog = $state<HTMLDialogElement | null>(null);
   let query = $state<string>('');
+  let inputRef: HTMLInputElement;
 
   let onXClick: ((id: string) => void) | undefined =
     enableRemove && localStorageKey
@@ -42,6 +43,11 @@
       localStorage.removeItem(localStorageKey);
       wikiList = [];
     }
+  };
+
+  let clearQuery = () => {
+    query = '';
+    inputRef?.focus();
   };
 
   $effect(() => {
@@ -75,12 +81,26 @@
     </div>
 
     <div class="mb-4 flex items-center gap-4">
-      <input
-        type="text"
-        placeholder="Search..."
-        class="flex-1 border-[1px] border-solid border-[#444] bg-[#333] p-2 outline-0 focus:border-gray-500"
-        bind:value={query}
-      />
+      <div class="relative flex-1">
+        <input
+          bind:this={inputRef}
+          type="text"
+          placeholder="Search..."
+          class="w-full border-[1px] border-solid border-[#444] bg-[#333] p-2 outline-0 focus:border-gray-500"
+          bind:value={query}
+        />
+
+        {#if query}
+          <button
+            class="absolute top-1/2 right-2 flex h-10 w-10 -translate-y-1/2 transform cursor-pointer items-center justify-center hover:bg-gray-300/30"
+            title="Clear query"
+            onclick={clearQuery}
+            aria-label="Clear the search query"
+          >
+            <i class="bi bi-x-lg block"></i>
+          </button>
+        {/if}
+      </div>
 
       <button
         class="flex h-10 w-10 cursor-pointer items-center justify-center border border-red-700 bg-red-500"
@@ -91,8 +111,6 @@
         <i class="bi bi-trash-fill block"></i>
       </button>
     </div>
-
-    <!-- TODO: Add X button to clear the query -->
   </div>
 
   <ul>
