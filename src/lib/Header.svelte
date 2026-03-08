@@ -3,7 +3,14 @@
   import { Spring, Tween, prefersReducedMotion } from 'svelte/motion';
   import { fade, fly } from 'svelte/transition';
 
-  import { localStorageLanguageKey, localStoragePrefix } from './constants';
+  import {
+    gitHubRepoUrl,
+    localStorageFavoriteKey,
+    localStorageHistoryKey,
+    localStorageLanguageKey,
+    localStoragePrefix,
+    wikipediaUrl,
+  } from './constants';
   import { type Language, languageMap } from './types';
 
   type Props = {
@@ -11,6 +18,8 @@
     isHistoryDialogOpen: boolean;
     isFavoriteDialogOpen: boolean;
     isMobileSidebarOpen: boolean;
+    clearStoredHistoryFn: Function;
+    clearStoredFavoritesFn: Function;
   };
 
   let {
@@ -18,6 +27,8 @@
     isFavoriteDialogOpen = $bindable(),
     isHistoryDialogOpen = $bindable(),
     isMobileSidebarOpen = $bindable(),
+    clearStoredFavoritesFn,
+    clearStoredHistoryFn,
   }: Props = $props();
 
   function changeLanguage(language: Language) {
@@ -28,8 +39,21 @@
     window.location.reload();
   }
 
+  function clearHistory() {
+    localStorage.removeItem(localStoragePrefix + localStorageHistoryKey);
+    isSettingsExpanded = false;
+    clearStoredHistoryFn();
+  }
+
+  function clearFavorites() {
+    localStorage.removeItem(localStoragePrefix + localStorageFavoriteKey);
+    isSettingsExpanded = false;
+    clearStoredFavoritesFn();
+  }
+
   let isLanguageMenuOpen = $state(false);
   let isMenuExpanded = $state(false);
+  let isSettingsExpanded = $state(false);
 
   function toggleLanguageMenu() {
     isLanguageMenuOpen = !isLanguageMenuOpen;
@@ -69,7 +93,7 @@
       >
         <li>
           <a
-            href="https://www.wikipedia.org/"
+            href={wikipediaUrl}
             title="Wikipedia"
             target="_blank"
             aria-label="Wikipedia"
@@ -81,7 +105,7 @@
         </li>
         <li>
           <a
-            href="https://github.com/data-miner00/wikitok"
+            href={gitHubRepoUrl}
             title="GitHub repository"
             target="_blank"
             aria-label="GitHub repository"
@@ -142,6 +166,47 @@
                   >
                 </li>
               {/each}
+            </ul>
+          {/if}
+        </li>
+        <li class="relative">
+          <button
+            class="cursor-pointer outline-0"
+            title="Settings"
+            aria-label="Settings"
+            onclick={() => (isSettingsExpanded = !isSettingsExpanded)}
+          >
+            <i class="bi bi-gear" aria-hidden="true"></i>
+            <span class="sr-only">Settings</span>
+          </button>
+
+          {#if isSettingsExpanded}
+            <ul
+              transition:fly={{ y: -10, duration: 200, easing: circIn }}
+              id="settings-menu"
+              class="absolute right-0 -bottom-24 overflow-hidden rounded bg-white/20 text-lg shadow-md"
+              aria-labelledby="settings-toggle"
+            >
+              <li>
+                <button
+                  class="block w-40 cursor-pointer px-2 py-1 hover:bg-black/40"
+                  onclick={clearHistory}
+                  tabindex="0"
+                >
+                  <i class="bi bi-clock-history"></i>
+                  <span> Clear history </span>
+                </button>
+              </li>
+              <li>
+                <button
+                  class="block w-full cursor-pointer px-2 py-1 hover:bg-black/40"
+                  onclick={clearFavorites}
+                  tabindex="0"
+                >
+                  <i class="bi bi-heartbreak"></i>
+                  <span> Clear favorites </span>
+                </button>
+              </li>
             </ul>
           {/if}
         </li>

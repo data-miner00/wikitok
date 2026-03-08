@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { onDestroy, onMount } from 'svelte';
+
   import { localStorageLanguageKey, localStoragePrefix } from './constants';
+  import { gitHubRepoUrl, wikipediaUrl } from './constants';
   import { type Language, languageMap } from './types';
 
   type Props = {
@@ -23,9 +26,34 @@
     );
     window.location.reload();
   }
+
+  let mobileSidebar: HTMLElement | null;
+
+  function onClickOutside(event: Event) {
+    const burgerButton = document.querySelector(
+      'button[aria-controls="mobile-menu"]'
+    );
+
+    if (
+      isOpen &&
+      !burgerButton?.contains(event.target as any) &&
+      !mobileSidebar?.contains(event.target as any)
+    ) {
+      isOpen = false;
+    }
+  }
+
+  onMount(() => {
+    window.addEventListener('click', onClickOutside);
+  });
+
+  onDestroy(() => {
+    window.addEventListener('click', onClickOutside);
+  });
 </script>
 
 <aside
+  bind:this={mobileSidebar}
   id="mobile-menu"
   class="absolute top-0 z-20 h-screen w-4/5 border-r border-solid border-[#444] bg-[#222]/80 transition-all duration-150 {isOpen
     ? 'right-0'
@@ -50,7 +78,7 @@
         aria-expanded={isLanguageMenuOpen}
         aria-controls="language-menu-sidebar"
       >
-        <i class="bi bi-translate"></i>
+        <i class="bi bi-translate" aria-hidden="true"></i>
 
         <span>Language</span>
       </button>
@@ -60,7 +88,7 @@
         class="cursor-pointer"
         onclick={() => (isFavoriteDialogOpen = !isFavoriteDialogOpen)}
       >
-        <i class="bi bi-heart"></i>
+        <i class="bi bi-heart" aria-hidden="true"></i>
 
         <span>Favorite</span>
       </button>
@@ -70,24 +98,34 @@
         class="cursor-pointer"
         onclick={() => (isHistoryDialogOpen = !isHistoryDialogOpen)}
       >
-        <i class="bi bi-clock"></i>
+        <i class="bi bi-clock" aria-hidden="true"></i>
 
         <span>History</span>
       </button>
     </li>
     <li class="w-full px-5 py-5 text-xl">
-      <button class="cursor-pointer">
-        <i class="bi bi-github"></i>
-
+      <a
+        href={gitHubRepoUrl}
+        title="GitHub repository"
+        target="_blank"
+        aria-label="GitHub repository"
+        rel="noopener noreferrer"
+      >
+        <i class="bi bi-github" aria-hidden="true"></i>
         <span>GitHub</span>
-      </button>
+      </a>
     </li>
     <li class="w-full px-5 py-5 text-xl">
-      <button class="cursor-pointer">
-        <i class="bi bi-wikipedia"></i>
-
+      <a
+        href={wikipediaUrl}
+        title="Wikipedia"
+        target="_blank"
+        aria-label="Wikipedia"
+        rel="noopener noreferrer"
+      >
+        <i class="bi bi-wikipedia" aria-hidden="true"></i>
         <span>Wikipedia</span>
-      </button>
+      </a>
     </li>
   </ul>
 </aside>

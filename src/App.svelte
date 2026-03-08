@@ -35,6 +35,14 @@
   let isHistoryDialogOpen = $state(false);
   let isMobileSidebarOpen = $state(false);
 
+  function clearStoredHistoryFn() {
+    storedHistory = [];
+  }
+
+  function clearStoredFavoritesFn() {
+    storedFavorites = [];
+  }
+
   async function execute() {
     const tasks: Promise<Response>[] = [];
 
@@ -79,6 +87,8 @@
   bind:isFavoriteDialogOpen
   bind:isHistoryDialogOpen
   bind:isMobileSidebarOpen
+  {clearStoredFavoritesFn}
+  {clearStoredHistoryFn}
 />
 
 {#await execute()}
