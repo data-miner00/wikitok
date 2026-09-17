@@ -36,6 +36,7 @@
   }
 
   function handleFavorite(event: MouseEvent) {
+    event.preventDefault();
     isFavorite = !isFavorite;
 
     onFavorite(
@@ -67,7 +68,8 @@
 </script>
 
 <article
-  class="relative h-screen w-screen snap-start bg-slate-400 bg-cover bg-center bg-no-repeat bg-blend-darken"
+  class="relative h-screen w-screen touch-manipulation snap-start bg-slate-400 bg-cover bg-center bg-no-repeat bg-blend-darken"
+  ondblclick={handleFavorite}
   style:background-image={`url('${backgroundUrl}')`}
 >
   <div class="absolute bottom-0 left-0 block w-full bg-black/50 p-4 text-white">
