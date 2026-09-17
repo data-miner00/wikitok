@@ -25,7 +25,12 @@
 
   let isFavorite = $state<boolean>(!!isFaved);
 
-  function handleClick(event: MouseEvent) {
+  let showHeartBurst = $state(false);
+  let heartBurstId = $state(0);
+  let burstPosition = $state({ x: 0, y: 0 });
+  let burstTimeoutId: ReturnType<typeof setTimeout>;
+
+  function handleClick() {
     onVisit({
       title,
       extract: excerpt,
@@ -51,6 +56,22 @@
     );
   }
 
+  function triggerHeartBurst(x: number, y: number) {
+    burstPosition = { x, y };
+    heartBurstId += 1;
+    showHeartBurst = true;
+
+    clearTimeout(burstTimeoutId);
+    burstTimeoutId = setTimeout(() => {
+      showHeartBurst = false;
+    }, 800);
+  }
+
+  function handleDoubleTapFavorite(event: MouseEvent) {
+    triggerHeartBurst(event.offsetX, event.offsetY);
+    handleFavorite(event);
+  }
+
   function copyToClipboard(content: string): void {
     if (!navigator.clipboard) {
       const el = document.createElement('input');
@@ -69,9 +90,20 @@
 
 <article
   class="relative h-screen w-screen touch-manipulation snap-start bg-slate-400 bg-cover bg-center bg-no-repeat bg-blend-darken"
-  ondblclick={handleFavorite}
+  ondblclick={handleDoubleTapFavorite}
   style:background-image={`url('${backgroundUrl}')`}
 >
+  {#if showHeartBurst}
+    {#key heartBurstId}
+      <div
+        class="pointer-events-none absolute z-10 text-white drop-shadow-lg"
+        style:left={`${burstPosition.x}px`}
+        style:top={`${burstPosition.y}px`}
+      >
+        <i class="bi bi-heart-fill heart-burst text-8xl"></i>
+      </div>
+    {/key}
+  {/if}
   <div class="absolute bottom-0 left-0 block w-full bg-black/50 p-4 text-white">
     <div class="mb-2 flex items-center gap-4">
       <a
@@ -122,3 +154,29 @@
     </p>
   </div>
 </article>
+
+<style>
+  .heart-burst {
+    transform: translate(-50%, -50%) scale(0);
+    animation: heart-burst 0.8s ease-out forwards;
+  }
+
+  @keyframes heart-burst {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+    }
+    15% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 1;
+    }
+    30% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+    }
+  }
+</style>
